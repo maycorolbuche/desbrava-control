@@ -1,32 +1,10 @@
 <template>
   <div class="__logo__">
-    <div ref="container" class="sparkle-container"></div>
-    <div style="position: relative; width: 100%; text-align: center">
-      <div
-        style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: -1;
-
-          background: conic-gradient(
-            from 0deg,
-            rgba(255, 215, 0, 0.9),
-            rgba(255, 180, 0, 0.4),
-            rgba(255, 215, 0, 0.9),
-            rgba(255, 180, 0, 0.4),
-            rgba(255, 215, 0, 0.9)
-          );
-
-          filter: blur(80px);
-          border-radius: 50%;
-          opacity: 0.8;
-        "
-      />
-      <div style="width: 100%; height: 100%; padding: 20px">
-        <img style="width: 100%; height: 100%" src="@/assets/imgs/logo.png" />
+    <div ref="container" class="sparkle-container" />
+    <div class="logo-container">
+      <div class="glow" />
+      <div class="logo-div">
+        <img src="@/assets/imgs/logo.png" />
       </div>
     </div>
   </div>
@@ -88,6 +66,10 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .__logo__ {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   .sparkle-container {
     inset: 0;
     pointer-events: none;
@@ -101,6 +83,45 @@ onBeforeUnmount(() => {
       border-radius: 50%;
       background: radial-gradient(circle, #ffd700 0%, #ffb300 40%, transparent 70%);
       animation: explode linear forwards;
+    }
+  }
+  .logo-container {
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+
+    .glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+
+      background: conic-gradient(
+        from 0deg,
+        rgba(255, 215, 0, 0.9),
+        rgba(255, 180, 0, 0.4),
+        rgba(255, 215, 0, 0.9),
+        rgba(255, 180, 0, 0.4),
+        rgba(255, 215, 0, 0.9)
+      );
+
+      filter: blur(80px);
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .logo-div {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
