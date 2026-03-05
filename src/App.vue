@@ -28,6 +28,8 @@
         <div class="agenda-glow"></div>
       </v-card>
 
+      <pre style="background: red">{{ env }}</pre>
+
       gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />
       gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />
       gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />gfdgf<br />
@@ -57,6 +59,7 @@
 import Logo from '@/components/Logo.vue'
 
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+const env = import.meta.env
 
 const hero = ref(null)
 function handleScroll() {
