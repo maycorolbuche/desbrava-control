@@ -58,8 +58,8 @@
       content: '';
       position: absolute;
       top: -10px;
-      left: 10%;
-      width: 90%;
+      left: 15%;
+      width: 70%;
       height: 20px;
 
       background: radial-gradient(ellipse, rgb(var(--v-theme-secondary)) 0%, transparent 70%);
@@ -71,8 +71,8 @@
       content: '';
       position: absolute;
       bottom: -10px;
-      left: 10%;
-      width: 90%;
+      left: 15%;
+      width: 70%;
       height: 20px;
 
       background: radial-gradient(ellipse, rgba(255, 215, 0, 0.8) 0%, transparent 70%);
