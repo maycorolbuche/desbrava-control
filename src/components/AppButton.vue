@@ -42,5 +42,21 @@ const label = toRef(props, 'label')
     height: 90%;
     filter: blur(10px);
   }
+
+  &:hover {
+    animation: borderPulse 1s infinite;
+  }
+}
+
+@keyframes borderPulse {
+  0% {
+    border-color: rgb(var(--v-theme-secondary));
+  }
+  50% {
+    border-color: rgb(var(--v-theme-primary));
+  }
+  100% {
+    border-color: rgb(var(--v-theme-secondary));
+  }
 }
 </style>
