@@ -7,7 +7,7 @@
         <Logo />
       </div>
 
-      <div class="pa-7 d-flex justify-space-evenly flex-wrap" style="gap: 15px">
+      <div class="pa-2 d-flex justify-center flex-wrap" style="gap: 20px">
         <AppButton />
         <AppButton />
         <AppButton />
