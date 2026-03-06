@@ -46,7 +46,8 @@
     align-items: center;
     justify-content: space-evenly;
 
-    background: #00000050;
+    background: rgb(0 0 0 / 45%);
+    backdrop-filter: blur(30px);
 
     border: 0;
     border-top: 4px solid rgb(var(--v-theme-secondary));
