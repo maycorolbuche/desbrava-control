@@ -47,6 +47,7 @@
     justify-content: space-evenly;
 
     background: #00000050;
+
     border: 0;
     border-top: 4px solid rgb(var(--v-theme-secondary));
     border-radius: 35px 35px 0 0;

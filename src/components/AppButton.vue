@@ -1,6 +1,11 @@
 <template>
-  <v-card class="__app-button__" :width="200" @click="alert('df')">
-    <v-card-title>APP </v-card-title>
+  <v-card class="__app-button__" :width="150" @click="alert('df')">
+    <v-card-text class="text-center mx-0 px-0 pb-0 mb-0">
+      <v-icon :size="60">mdi-calendar</v-icon>
+    </v-card-text>
+    <v-card-title class="text-center font-weight-thin mx-0 px-0" style="font-size: 17px">
+      AGENDA
+    </v-card-title>
   </v-card>
 </template>
 
@@ -9,18 +14,10 @@
   border: 3px solid rgb(var(--v-theme-secondary));
   background: initial;
   border-radius: 12px;
-  background: #00000030;
+  background: rgb(var(--v-theme-secondary));
   box-shadow: 0px 16px 12px 5px rgba(0, 0, 0, 0.3);
+  color: rgb(var(--v-theme-primary));
 
-  &::before {
-    content: '';
-    box-shadow: inset 0 0 7px 10px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
   &::after {
     content: '';
     background: radial-gradient(ellipse, rgba(var(--v-theme-secondary), 0.8) 0%, transparent 70%);
@@ -30,14 +27,6 @@
     width: 90%;
     height: 90%;
     filter: blur(10px);
-  }
-
-  &:hover {
-    background: rgb(var(--v-theme-secondary));
-
-    &::before {
-      box-shadow: initial;
-    }
   }
 }
 </style>
