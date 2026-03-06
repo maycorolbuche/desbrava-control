@@ -1,5 +1,46 @@
 <template>
-  <v-container>
-    <h1>Home</h1>
+  <v-container class="pa-0 ma-0 mx-auto">
+    <div class="pa-2 d-flex justify-center flex-wrap" style="gap: 20px">
+      <AppButton icon="mdi-calendar" label="AGENDA" @click="click()" />
+      <AppButton icon="mdi-clock" label="Classes" />
+      <AppButton icon="mdi-menu" label="Mapa" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+      <AppButton icon="mdi-calendar" label="Agenda" />
+    </div>
   </v-container>
 </template>
+
+<script setup>
+import AppButton from '@/components/AppButton.vue'
+
+function click() {
+  console.log('CLICK')
+}
+</script>

@@ -26,17 +26,34 @@
     border-bottom: 4px solid rgb(var(--v-theme-secondary));
     width: 20%;
     margin: 0px;
+    position: relative;
 
     @media (max-width: 400px) {
       width: 20px;
     }
+
+    &:after {
+      content: '';
+      position: absolute;
+      margin-top: 24px;
+      width: 35px;
+      height: 100%;
+    }
   }
   .left-menu {
     border-radius: 0 0 35px 0;
+    &:after {
+      right: 0;
+      background: radial-gradient(circle at 0 0, transparent 36px, rgb(0 0 0 / 45%) 0px);
+    }
   }
 
   .right-menu {
     border-radius: 0 0 0 35px;
+    &:after {
+      left: 0;
+      background: radial-gradient(circle at 100% 0, transparent 36px, rgb(0 0 0 / 45%) 0px);
+    }
   }
 
   .center-menu {

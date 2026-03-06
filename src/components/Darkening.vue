@@ -32,6 +32,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .__darkening__ {
   background: #000;
+  pointer-events: none;
   opacity: 0;
   position: fixed;
   top: 0;

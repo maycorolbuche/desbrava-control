@@ -1,13 +1,27 @@
 <template>
-  <v-card class="__app-button__" :width="150" @click="alert('df')">
+  <v-card class="__app-button__" :width="150">
     <v-card-text class="text-center mx-0 px-0 pb-0 mb-0">
-      <v-icon :size="60">mdi-calendar</v-icon>
+      <v-icon :size="60">
+        {{ icon }}
+      </v-icon>
     </v-card-text>
-    <v-card-title class="text-center font-weight-thin mx-0 px-0" style="font-size: 17px">
-      AGENDA
+    <v-card-title class="text-center font-weight-medium mx-0 px-0" style="font-size: 17px">
+      {{ label }}
     </v-card-title>
   </v-card>
 </template>
+
+<script setup>
+import { ref, toRef, onMounted, onBeforeUnmount } from 'vue'
+
+const props = defineProps({
+  icon: { type: String },
+  label: { type: String },
+})
+
+const icon = toRef(props, 'icon')
+const label = toRef(props, 'label')
+</script>
 
 <style lang="scss" scoped>
 .__app-button__ {
