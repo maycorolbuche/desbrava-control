@@ -1,5 +1,5 @@
 <template>
-  <div class="__logo__">
+  <div class="__logo__" :data-variant="variant">
     <div ref="container" class="sparkle-container" />
     <div class="logo-container">
       <div class="glow" />
@@ -11,10 +11,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, toRef, onMounted, onBeforeUnmount } from 'vue'
 
 const container = ref(null)
 let intervalId = null
+
+const props = defineProps({
+  variant: { type: String },
+})
+
+const variant = toRef(props, 'variant')
 
 function createSparkle() {
   if (!container.value) return
@@ -28,7 +34,7 @@ function createSparkle() {
 
   // Centro da tela
   const centerX = window.innerWidth / 2
-  const centerY = window.innerHeight / 2 / 2
+  const centerY = variant.value == 'wallpaper' ? window.innerHeight / 2 : window.innerHeight / 2 / 2
 
   sparkle.style.left = centerX + 'px'
   sparkle.style.top = centerY + 'px'
@@ -122,6 +128,12 @@ onBeforeUnmount(() => {
         width: 100%;
         height: 100%;
       }
+    }
+  }
+
+  &[data-variant='wallpaper'] {
+    .logo-container {
+      max-width: max(50vw, 50vh);
     }
   }
 

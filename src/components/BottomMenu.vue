@@ -1,0 +1,101 @@
+<template>
+  <v-bottom-navigation class="__bottom-menu__">
+    <div class="left-menu" />
+    <div class="center-menu">
+      <v-btn class="button-menu" icon="mdi-history" />
+      <div class="divider-menu" vertical />
+      <v-btn class="button-menu" icon="mdi-heart" />
+      <div class="divider-menu" vertical />
+      <v-btn class="button-menu" icon="mdi-map-marker" />
+    </div>
+    <div class="right-menu" />
+  </v-bottom-navigation>
+</template>
+
+<style lang="scss">
+.__bottom-menu__ {
+  background: initial;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+
+  .left-menu,
+  .right-menu {
+    border: 0;
+    border-bottom: 4px solid rgb(var(--v-theme-secondary));
+    width: 20%;
+    margin: 0px;
+
+    @media (max-width: 400px) {
+      width: 20px;
+    }
+  }
+  .left-menu {
+    border-radius: 0 0 35px 0;
+  }
+
+  .right-menu {
+    border-radius: 0 0 0 35px;
+  }
+
+  .center-menu {
+    height: 60px !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background: #00000050;
+    border: 0;
+    border-top: 4px solid rgb(var(--v-theme-secondary));
+    border-radius: 35px 35px 0 0;
+    padding: 6px 10px;
+
+    flex: 1;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 10%;
+      width: 90%;
+      height: 20px;
+
+      background: radial-gradient(ellipse, rgb(var(--v-theme-secondary)) 0%, transparent 70%);
+
+      filter: blur(10px);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 10%;
+      width: 90%;
+      height: 20px;
+
+      background: radial-gradient(ellipse, rgba(255, 215, 0, 0.8) 0%, transparent 70%);
+
+      filter: blur(10px);
+    }
+
+    .button-menu {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+
+    .divider-menu {
+      border: 0;
+      width: 1px;
+      height: 100%;
+
+      background-image: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(var(--v-theme-secondary)),
+        transparent
+      );
+    }
+  }
+}
+</style>
