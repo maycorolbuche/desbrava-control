@@ -1,16 +1,5 @@
 <template>
-  <div
-    ref="hero"
-    style="
-      background: #000;
-      opacity: 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    "
-  />
+  <div class="__darkening__" ref="hero" />
 </template>
 
 <script setup>
@@ -39,3 +28,30 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<style lang="scss">
+.__darkening__ {
+  background: #000;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0) 40%,
+      rgba(5, 20, 60, 0.6) 70%,
+      rgba(2, 10, 30, 0.9) 100%
+    );
+
+    pointer-events: none;
+  }
+}
+</style>
