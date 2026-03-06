@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .__darkening__ {
   background: #000;
   opacity: 0;

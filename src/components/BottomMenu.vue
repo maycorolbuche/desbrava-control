@@ -12,7 +12,7 @@
   </v-bottom-navigation>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .__bottom-menu__ {
   background: initial;
   display: flex;
@@ -75,7 +75,7 @@
       width: 70%;
       height: 20px;
 
-      background: radial-gradient(ellipse, rgba(255, 215, 0, 0.8) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(var(--v-theme-secondary), 0.8) 0%, transparent 70%);
 
       filter: blur(10px);
     }
