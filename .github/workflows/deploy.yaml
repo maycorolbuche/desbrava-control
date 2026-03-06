@@ -38,7 +38,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          VITE_BASE_URL: /desbrava-control/
+          VITE_BASE_URL: /
 
       - name: copy CNAME to dist (if exists)
         run: |
