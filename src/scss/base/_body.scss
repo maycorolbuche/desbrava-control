@@ -1,28 +1,22 @@
 html {
   min-height: 100vh;
   min-width: 100vw;
-  overflow: hidden;
   margin: 0;
   padding: 0;
   background: rgb(var(--v-theme-secondary));
+  overscroll-behavior-y: none;
 
   body {
     min-height: 100vh;
     min-width: 100vw;
-    overflow: hidden;
     margin: 0;
     padding: 0;
+    overscroll-behavior-y: none;
 
     background: url('../../assets/imgs/background.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-
-    #app {
-      height: 100%;
-      overflow-y: auto;
-      /* overscroll-behavior: contain;*/
-    }
   }
 }
