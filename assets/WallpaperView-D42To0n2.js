@@ -1,0 +1,1 @@
+import{c as a,w as t,r as s,o,e as c,a as r,f as _}from"./index-BtJqfLr3.js";const n={class:"w-100 d-flex justify-center"},u={__name:"WallpaperView",setup(l){return(p,i)=>{const e=s("v-layout");return o(),a(e,{style:{height:"100vh"}},{default:t(()=>[c("div",n,[r(_,{variant:"wallpaper"})])]),_:1})}}};export{u as default};
