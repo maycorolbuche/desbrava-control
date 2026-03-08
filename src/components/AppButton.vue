@@ -1,7 +1,10 @@
 <template>
   <v-card class="__app-button__" :width="150">
     <v-card-text class="text-center mx-0 px-0 pb-0 mb-0">
-      <v-icon :size="60">
+      <v-icon :size="60" v-if="iconType === 'object'">
+        <component :is="icon" />
+      </v-icon>
+      <v-icon v-else :size="60">
         {{ icon }}
       </v-icon>
     </v-card-text>
@@ -13,14 +16,17 @@
 
 <script setup>
 import { ref, toRef, onMounted, onBeforeUnmount } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
-  icon: { type: String },
+  icon: { type: [String, Object] },
   label: { type: String },
 })
 
 const icon = toRef(props, 'icon')
 const label = toRef(props, 'label')
+
+const iconType = computed(() => typeof icon.value)
 </script>
 
 <style lang="scss" scoped>
