@@ -1,22 +1,16 @@
-html {
-  min-height: 100vh;
-  min-width: 100vw;
+html,
+body {
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
   margin: 0;
   padding: 0;
-  background: rgb(var(--v-theme-secondary));
-  overscroll-behavior-y: none;
 
-  body {
-    min-height: 100vh;
-    min-width: 100vw;
-    margin: 0;
-    padding: 0;
-    overscroll-behavior-y: none;
-
-    background: url('../../assets/imgs/background.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-  }
+  background-color: rgb(var(--v-theme-primary));
+  background-image: url('../../assets/imgs/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
