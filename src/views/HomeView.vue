@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0 ma-0 mx-auto">
     <div class="pa-2 d-flex justify-center flex-wrap" style="gap: 20px">
-      <AppButton icon="mdi-home-city-outline" label="Clubes" @click="click()" />
+      <AppButton icon="mdi-home-city-outline" label="Clubes" :to="{ name: 'clubs' }" />
       <AppButton :icon="ClassesIcon" label="Classes" @click="click()" />
       <AppButton :icon="HonorsIcon" label="Especialidades" @click="click()" />
       <AppButton icon="mdi-clock" label="Classes" />

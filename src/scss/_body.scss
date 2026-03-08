@@ -19,3 +19,7 @@ body {
     min-height: 100dvh;
   }
 }
+
+.bg-light {
+  background: rgb(var(--v-theme-primaryLight));
+}

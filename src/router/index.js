@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useLayout } from 'vuetify/lib/composables/layout'
 
 const routes = [
   {
@@ -8,13 +7,22 @@ const routes = [
     component: () => import('@/views/HomeView.vue'),
   },
   {
-    path: '/login',
+    path: '/acesso',
     name: 'login',
     component: () => import('@/views/auth/LoginView.vue'),
     meta: {
       layout: 'login',
     },
   },
+  {
+    path: '/clubes',
+    name: 'clubs',
+    component: () => import('@/views/clubs/ClubsView.vue'),
+    meta: {
+      layout: 'page',
+    },
+  },
+
   {
     path: '/wallpaper',
     name: 'wallpaper',

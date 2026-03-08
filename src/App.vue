@@ -11,6 +11,7 @@ import { useRoute } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import LoginLayout from '@/layouts/LoginLayout.vue'
 import BlankLayout from '@/layouts/BlankLayout.vue'
+import PageLayout from '@/layouts/PageLayout.vue'
 
 /* ------------------------ VARS ------------------------ */
 
@@ -23,6 +24,8 @@ const layoutComponent = computed(() => {
     ? LoginLayout
     : route?.meta?.layout === 'blank'
       ? BlankLayout
-      : MainLayout
+      : route?.meta?.layout === 'page'
+        ? PageLayout
+        : MainLayout
 })
 </script>
