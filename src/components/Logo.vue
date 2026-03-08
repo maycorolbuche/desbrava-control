@@ -1,5 +1,5 @@
 <template>
-  <div class="__logo__" :data-variant="variant">
+  <div class="__logo__" :data-variant="variant" :style="{ width: width }">
     <div ref="container" class="sparkle-container" />
     <div class="logo-container">
       <div class="glow" />
@@ -18,9 +18,11 @@ let intervalId = null
 
 const props = defineProps({
   variant: { type: String },
+  width: { type: String },
 })
 
 const variant = toRef(props, 'variant')
+const width = toRef(props, 'width')
 
 function createSparkle() {
   if (!container.value) return

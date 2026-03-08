@@ -8,6 +8,14 @@ const routes = [
     component: () => import('@/views/HomeView.vue'),
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/auth/LoginView.vue'),
+    meta: {
+      layout: 'login',
+    },
+  },
+  {
     path: '/wallpaper',
     name: 'wallpaper',
     component: () => import('@/views/WallpaperView.vue'),

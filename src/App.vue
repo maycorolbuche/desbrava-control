@@ -1,5 +1,5 @@
 <template>
-  <component :is="layoutComponent" />
+  <component :is="layoutComponent" v-cloak />
 </template>
 
 <script setup>
