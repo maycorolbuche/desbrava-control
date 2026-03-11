@@ -1,4 +1,6 @@
 <template>
+  <Loading v-model="isLoading" />
+  <Alert />
   <component :is="layoutComponent" v-cloak />
 </template>
 
@@ -7,6 +9,10 @@
 
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useLoading } from '@/composables/loading'
+
+import Loading from '@/components/Loading.vue'
+import Alert from '@/components/Alert.vue'
 
 import MainLayout from '@/layouts/MainLayout.vue'
 import LoginLayout from '@/layouts/LoginLayout.vue'
@@ -16,6 +22,7 @@ import PageLayout from '@/layouts/PageLayout.vue'
 /* ------------------------ VARS ------------------------ */
 
 const route = useRoute()
+const { isLoading } = useLoading()
 
 /* ------------------------ COMPUTEDS ------------------------ */
 

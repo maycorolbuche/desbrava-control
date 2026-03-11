@@ -13,10 +13,12 @@ body {
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-attachment: fixed !important;
+  overflow: hidden;
 
   #app {
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: auto;
   }
 }
 

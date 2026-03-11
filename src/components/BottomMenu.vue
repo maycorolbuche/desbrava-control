@@ -6,11 +6,16 @@
       <div class="divider-menu" vertical />
       <v-btn class="button-menu" icon="mdi-heart" />
       <div class="divider-menu" vertical />
-      <v-btn class="button-menu" icon="mdi-map-marker" />
+      <v-btn class="button-menu" icon="mdi-map-marker" @click="Api.logout()" />
     </div>
     <div class="right-menu" />
   </v-bottom-navigation>
 </template>
+
+<script setup>
+//TODO: remover depois
+import Api from '@/services/Api'
+</script>
 
 <style lang="scss" scoped>
 .__bottom-menu__ {
