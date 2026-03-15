@@ -11,9 +11,8 @@
         <router-view />
       </div>
     </v-main>
-
-    <BottomMenu />
   </v-layout>
+  <BottomMenu />
 </template>
 
 <script setup>

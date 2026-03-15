@@ -21,6 +21,24 @@ const routes = [
       layout: 'login',
     },
   },
+
+  {
+    path: '/distritos',
+    name: 'districts',
+    component: () => import('@/views/districts/DistrictsView.vue'),
+    meta: {
+      layout: 'page',
+    },
+  },
+  {
+    path: '/distritos/novo',
+    name: 'districts.new',
+    component: () => import('@/views/districts/DistrictsNewView.vue'),
+    meta: {
+      layout: 'page',
+    },
+  },
+
   {
     path: '/clubes',
     name: 'clubs',

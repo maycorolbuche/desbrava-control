@@ -1,24 +1,17 @@
 html,
 body {
-  width: 100vw;
-  width: 100dvw;
   height: 100vh;
   height: 100dvh;
   margin: 0;
   padding: 0;
 
-  background-color: rgb(var(--v-theme-primary)) !important;
-  background-image: url('@/assets/imgs/background.png') !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-attachment: fixed !important;
-  overflow: hidden;
-
-  #app {
-    height: 100vh;
-    height: 100dvh;
-    overflow: auto;
+  .v-application {
+    background-color: rgb(var(--v-theme-primary)) !important;
+    background-image: url('@/assets/imgs/background.png') !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
   }
 }
 

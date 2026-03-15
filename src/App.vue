@@ -1,7 +1,9 @@
 <template>
-  <Loading v-model="isLoading" />
-  <Alert />
-  <component :is="layoutComponent" v-cloak />
+  <v-app>
+    <Loading v-model="isLoading" />
+    <Alert />
+    <component :is="layoutComponent" v-cloak />
+  </v-app>
 </template>
 
 <script setup>
