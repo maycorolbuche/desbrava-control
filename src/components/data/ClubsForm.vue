@@ -1,30 +1,8 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <v-text-field
-        v-model="form.name"
-        class="my-3"
-        variant="outlined"
-        label="Nome do Clube:"
-        color="info"
-        hide-details
-        :loading="loading"
-        :disabled="loading"
-      />
-
-      <v-select
-        v-model="form.district_id"
-        class="my-3"
-        variant="outlined"
-        label="Distrito:"
-        color="info"
-        hide-details
-        :items="districts"
-        item-title="name"
-        item-value="id"
-        :loading="loading || loading_districts"
-        :disabled="loading || loading_districts"
-      />
+      <Input v-model="form.name" label="Nome do Clube" :loading="loading" />
+      <SelectDistrict v-model="form.district_id" label="Distrito" :loading="loading" />
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -51,6 +29,10 @@
 <script setup>
 import { ref, toRef, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+
+import Input from '@/components/inputs/Input.vue'
+import SelectDistrict from '@/components/inputs/SelectDistrict.vue'
+
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 
@@ -64,9 +46,6 @@ const data = toRef(props, 'data')
 
 const loading = ref(false)
 const form = ref({})
-
-const districts = ref([])
-const loading_districts = ref(false)
 
 const router = useRouter()
 const emit = defineEmits(['save'])
@@ -110,23 +89,9 @@ async function setForm() {
   }
 }
 
-async function loadDistricts() {
-  loading_districts.value = true
-  const res = await Api.get('districts', {})
-  if (!res.success) {
-    Alert.error(res.error)
-  } else {
-    if (res.message) {
-      Alert.success(res.message)
-    }
-    districts.value = res.data
-  }
-  loading_districts.value = false
-}
 /* ------------------------ MOUNTED ------------------------ */
 
 onMounted(() => {
   setForm()
-  loadDistricts()
 })
 </script>

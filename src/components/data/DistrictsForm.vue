@@ -1,16 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <v-text-field
-        v-model="form.name"
-        class="my-3"
-        variant="outlined"
-        label="Nome do Distrito:"
-        color="info"
-        hide-details
-        :loading="loading"
-        :disabled="loading"
-      />
+      <Input v-model="form.name" label="Nome do Distrito" :loading="loading" />
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -37,6 +28,9 @@
 <script setup>
 import { ref, toRef, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+
+import Input from '@/components/inputs/Input.vue'
+
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 
