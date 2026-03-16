@@ -50,6 +50,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/clubes/novo',
+    name: 'clubs.new',
+    component: () => import('@/views/clubs/ClubsNewView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
 
   {
     path: '/wallpaper',

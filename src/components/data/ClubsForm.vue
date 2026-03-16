@@ -1,0 +1,132 @@
+<template>
+  <v-card flat>
+    <v-card-text>
+      <v-text-field
+        v-model="form.name"
+        class="my-3"
+        variant="outlined"
+        label="Nome do Clube:"
+        color="info"
+        hide-details
+        :loading="loading"
+        :disabled="loading"
+      />
+
+      <v-select
+        v-model="form.district_id"
+        class="my-3"
+        variant="outlined"
+        label="Distrito:"
+        color="info"
+        hide-details
+        :items="districts"
+        item-title="name"
+        item-value="id"
+        :loading="loading || loading_districts"
+        :disabled="loading || loading_districts"
+      />
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        v-if="!data"
+        @click="save"
+        color="info"
+        text="Cadastrar"
+        prepend-icon="mdi-plus"
+        :disabled="loading"
+      />
+      <v-btn
+        v-else
+        @click="save"
+        color="success"
+        text="Salvar"
+        prepend-icon="mdi-content-save-outline"
+        :disabled="loading"
+      />
+    </v-card-actions>
+  </v-card>
+</template>
+
+<script setup>
+import { ref, toRef, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import Alert from '@/helpers/Alert'
+import Api from '@/services/Api'
+
+/* ------------------------ VARS ------------------------ */
+
+const props = defineProps({
+  data: { type: Object },
+})
+
+const data = toRef(props, 'data')
+
+const loading = ref(false)
+const form = ref({})
+
+const districts = ref([])
+const loading_districts = ref(false)
+
+const router = useRouter()
+const emit = defineEmits(['save'])
+
+/* ------------------------ WATCH ------------------------ */
+
+watch(
+  () => data.value,
+  () => {
+    setForm()
+  },
+  { deep: true },
+)
+
+/* ------------------------ METHODS ------------------------ */
+
+async function save() {
+  loading.value = true
+
+  let res
+  if (data.value?.id) {
+    res = await Api.put('clubs/' + data.value.id, form.value)
+  } else {
+    res = await Api.post('clubs', form.value)
+  }
+
+  if (!res.success) {
+    Alert.error(res.error)
+  } else {
+    if (res.message) {
+      Alert.success(res.message)
+    }
+    emit('save', res.data)
+  }
+  loading.value = false
+}
+
+async function setForm() {
+  if (data.value) {
+    form.value = Object.assign({}, data.value)
+  }
+}
+
+async function loadDistricts() {
+  loading_districts.value = true
+  const res = await Api.get('districts', {})
+  if (!res.success) {
+    Alert.error(res.error)
+  } else {
+    if (res.message) {
+      Alert.success(res.message)
+    }
+    districts.value = res.data
+  }
+  loading_districts.value = false
+}
+/* ------------------------ MOUNTED ------------------------ */
+
+onMounted(() => {
+  setForm()
+  loadDistricts()
+})
+</script>
