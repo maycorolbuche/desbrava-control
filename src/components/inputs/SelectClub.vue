@@ -6,7 +6,7 @@
     :label="label"
     color="info"
     hide-details
-    :items="districts"
+    :items="clubs"
     item-title="name"
     item-value="id"
     :loading="loading || loading_data"
@@ -34,19 +34,19 @@ const model = computed({
   set: (v) => emit('update:modelValue', v),
 })
 
-const districts = ref([])
+const clubs = ref([])
 const loading_data = ref(false)
 
 async function loadData() {
   loading_data.value = true
-  const res = await Api.get('districts', {})
+  const res = await Api.get('clubs', {})
   if (!res.success) {
     Alert.error(res.error)
   } else {
     if (res.message) {
       Alert.success(res.message)
     }
-    districts.value = res.data
+    clubs.value = res.data
   }
   loading_data.value = false
 }

@@ -13,6 +13,12 @@
         label="Clubes"
         :to="{ name: 'clubs' }"
       />
+      <AppButton
+        v-if="permissions.includes('users.manage')"
+        icon="mdi-account-group"
+        label="Usuários"
+        :to="{ name: 'users' }"
+      />
       <AppButton :icon="ClassesIcon" label="Classes" @click="click()" />
       <AppButton :icon="HonorsIcon" label="Especialidades" @click="click()" />
       <AppButton icon="mdi-clock" label="Classes" />

@@ -61,6 +61,25 @@ const routes = [
   },
 
   {
+    path: '/usuarios',
+    name: 'users',
+    component: () => import('@/views/users/UsersView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/usuarios/novo',
+    name: 'users.new',
+    component: () => import('@/views/users/UsersNewView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+
+  {
     path: '/wallpaper',
     name: 'wallpaper',
     component: () => import('@/views/WallpaperView.vue'),
