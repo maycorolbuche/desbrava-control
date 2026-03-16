@@ -15,10 +15,19 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
+        v-if="!data"
         @click="save"
         color="info"
         text="Cadastrar"
         prepend-icon="mdi-plus"
+        :disabled="loading"
+      />
+      <v-btn
+        v-else
+        @click="save"
+        color="success"
+        text="Salvar"
+        prepend-icon="mdi-content-save-outline"
         :disabled="loading"
       />
     </v-card-actions>
@@ -26,24 +35,47 @@
 </template>
 
 <script setup>
-import { ref, toRef } from 'vue'
+import { ref, toRef, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 
 /* ------------------------ VARS ------------------------ */
 
-const loading = toRef(false)
-const form = toRef({})
+const props = defineProps({
+  data: { type: Object },
+})
+
+const data = toRef(props, 'data')
+
+const loading = ref(false)
+const form = ref({})
 
 const router = useRouter()
 const emit = defineEmits(['save'])
+
+/* ------------------------ WATCH ------------------------ */
+
+watch(
+  () => data.value,
+  () => {
+    setForm()
+  },
+  { deep: true },
+)
 
 /* ------------------------ METHODS ------------------------ */
 
 async function save() {
   loading.value = true
-  const res = await Api.post('districts', form.value)
+
+  let res
+  if (data.value?.id) {
+    res = await Api.put('districts/' + data.value.id, form.value)
+  } else {
+    res = await Api.post('districts', form.value)
+  }
+
   if (!res.success) {
     Alert.error(res.error)
   } else {
@@ -54,4 +86,16 @@ async function save() {
   }
   loading.value = false
 }
+
+async function setForm() {
+  if (data.value) {
+    form.value = Object.assign({}, data.value)
+  }
+}
+
+/* ------------------------ MOUNTED ------------------------ */
+
+onMounted(() => {
+  setForm()
+})
 </script>

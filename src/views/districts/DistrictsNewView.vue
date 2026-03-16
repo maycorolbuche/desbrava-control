@@ -1,5 +1,5 @@
 <template>
-  <Page title="Novo Distrito" :back="back">
+  <Page title="Novo Distrito" :back="back" :prev-route="{ name: 'districts' }">
     <DistrictsForm class="pt-3" @save="save" />
   </Page>
 </template>

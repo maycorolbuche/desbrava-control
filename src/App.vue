@@ -2,6 +2,7 @@
   <v-app>
     <Loading v-model="isLoading" />
     <Alert />
+    <Dialog />
     <component :is="layoutComponent" v-cloak />
   </v-app>
 </template>
@@ -15,6 +16,7 @@ import { useLoading } from '@/composables/loading'
 
 import Loading from '@/components/Loading.vue'
 import Alert from '@/components/Alert.vue'
+import Dialog from '@/components/Dialog.vue'
 
 import MainLayout from '@/layouts/MainLayout.vue'
 import LoginLayout from '@/layouts/LoginLayout.vue'

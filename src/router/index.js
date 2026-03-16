@@ -28,6 +28,7 @@ const routes = [
     component: () => import('@/views/districts/DistrictsView.vue'),
     meta: {
       layout: 'page',
+      requiresAuth: true,
     },
   },
   {
@@ -36,6 +37,7 @@ const routes = [
     component: () => import('@/views/districts/DistrictsNewView.vue'),
     meta: {
       layout: 'page',
+      requiresAuth: true,
     },
   },
 
@@ -45,6 +47,7 @@ const routes = [
     component: () => import('@/views/clubs/ClubsView.vue'),
     meta: {
       layout: 'page',
+      requiresAuth: true,
     },
   },
 
