@@ -19,6 +19,12 @@
         label="Usuários"
         :to="{ name: 'users' }"
       />
+      <AppButton
+        v-if="permissions.includes('classes.control')"
+        :icon="ClassesIcon"
+        label="Controle de Classes"
+        :to="{ name: 'classes-control' }"
+      />
       <AppButton :icon="ClassesIcon" label="Classes" @click="click()" />
       <AppButton :icon="HonorsIcon" label="Especialidades" @click="click()" />
       <AppButton icon="mdi-clock" label="Classes" />

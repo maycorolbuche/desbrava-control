@@ -8,7 +8,10 @@
         {{ icon }}
       </v-icon>
     </v-card-text>
-    <v-card-title class="text-center font-weight-medium mx-0 px-0" style="font-size: 17px">
+    <v-card-title
+      class="text-center font-weight-medium mx-0 px-0"
+      style="font-size: 17px; text-wrap: auto"
+    >
       {{ label }}
     </v-card-title>
   </v-card>

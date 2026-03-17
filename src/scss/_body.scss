@@ -6,12 +6,12 @@ body {
   padding: 0;
 
   .v-application {
-    background-color: rgb(var(--v-theme-primary)) !important;
-    background-image: url('@/assets/imgs/background.png') !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-attachment: fixed !important;
+    background-color: rgb(var(--v-theme-primary));
+    background-image: url('@/assets/imgs/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
   }
 }
 

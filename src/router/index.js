@@ -80,6 +80,16 @@ const routes = [
   },
 
   {
+    path: '/controle-classe',
+    name: 'classes-control',
+    component: () => import('@/views/classes-control/ClassesControlView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+
+  {
     path: '/wallpaper',
     name: 'wallpaper',
     component: () => import('@/views/WallpaperView.vue'),

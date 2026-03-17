@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-toolbar color="transparent">
-      <v-toolbar-title text="Lista de Usuários"></v-toolbar-title>
+      <v-toolbar-title text="AClubes"></v-toolbar-title>
 
       <template v-slot:append>
         <v-btn icon="mdi-sort"></v-btn>
@@ -55,7 +55,7 @@
 
   <v-bottom-sheet v-model="sheet">
     <v-card title="Alteração">
-      <UsersForm :data="updating" @save="saved" />
+      <ClubsForm :data="updating" @save="saved" />
     </v-card>
   </v-bottom-sheet>
 </template>
@@ -63,7 +63,7 @@
 <script setup>
 import { ref, toRef, onMounted } from 'vue'
 
-import UsersForm from '@/components/data/UsersForm.vue'
+import ClubsForm from '@/components/data/ClubsForm.vue'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 import Dialog from '@/helpers/Dialog'
@@ -77,7 +77,7 @@ const sheet = ref(false)
 
 async function loadData() {
   loading.value = true
-  const res = await Api.get('users', {})
+  const res = await Api.get('clubs', {})
   if (!res.success) {
     Alert.error(res.error)
   } else {
@@ -93,7 +93,7 @@ async function deleteData(id) {
   Dialog.confirm('Deseja remover este registro?', async (btn) => {
     if (btn === 'yes') {
       deleting.value.push(id)
-      const res = await Api.delete('users/' + id, {})
+      const res = await Api.delete('clubs/' + id, {})
       if (!res.success) {
         Alert.error(res.error)
       } else {

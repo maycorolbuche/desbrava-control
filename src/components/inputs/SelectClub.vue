@@ -6,11 +6,11 @@
     :label="label"
     color="info"
     hide-details
-    :items="clubs"
+    :items="data"
     item-title="name"
     item-value="id"
     :loading="loading || loading_data"
-    :disabled="loading || disabled || loading_data"
+    :disabled="loading || disabled || (loading_data && data.length <= 0)"
   />
 </template>
 
@@ -18,6 +18,7 @@
 import { ref, computed, onMounted } from 'vue'
 
 import Alert from '@/helpers/Alert'
+import Session from '@/helpers/Session'
 import Api from '@/services/Api'
 
 const props = defineProps({
@@ -34,10 +35,12 @@ const model = computed({
   set: (v) => emit('update:modelValue', v),
 })
 
-const clubs = ref([])
+const data = ref([])
 const loading_data = ref(false)
 
 async function loadData() {
+  data.value = Session.get('select-clubs', [])
+
   loading_data.value = true
   const res = await Api.get('clubs', {})
   if (!res.success) {
@@ -46,7 +49,8 @@ async function loadData() {
     if (res.message) {
       Alert.success(res.message)
     }
-    clubs.value = res.data
+    data.value = res.data
+    Session.set('select-clubs', data.value)
   }
   loading_data.value = false
 }

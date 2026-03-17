@@ -2,8 +2,24 @@
   <v-card flat>
     <v-card-text>
       <Input v-model="form.name" label="Nome" :loading="loading" />
-      <SelectDistrict v-model="form.district_id" label="Distrito" :loading="loading" />
-      <SelectClub v-model="form.club_id" label="Clube" :loading="loading" />
+      <SelectDistrict
+        v-if="user.role.code != 'instructor'"
+        v-model="form.district_id"
+        label="Distrito"
+        :loading="loading"
+      />
+      <SelectClub
+        v-if="user.role.code != 'instructor'"
+        v-model="form.club_id"
+        label="Clube"
+        :loading="loading"
+      />
+      <MultipleClass
+        v-if="user.role.code == 'instructor'"
+        v-model="form.class_id"
+        label="Classes"
+        :loading="loading"
+      />
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -28,12 +44,14 @@
 </template>
 
 <script setup>
-import { ref, toRef, onMounted, watch } from 'vue'
+import { ref, toRef, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { userStore } from '@/stores/userStore'
 
 import Input from '@/components/inputs/Input.vue'
 import SelectDistrict from '@/components/inputs/SelectDistrict.vue'
 import SelectClub from '@/components/inputs/SelectClub.vue'
+import MultipleClass from '@/components/inputs/MultipleClass.vue'
 
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
@@ -47,10 +65,16 @@ const props = defineProps({
 const data = toRef(props, 'data')
 
 const loading = ref(false)
-const form = ref({})
+const form = ref({
+  class_id: [],
+})
 
 const router = useRouter()
 const emit = defineEmits(['save'])
+
+const user = computed(() => {
+  return userStore()
+})
 
 /* ------------------------ WATCH ------------------------ */
 
