@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+// TODO: Implantar PWA
 /* ------------------------ IMPORTS ------------------------ */
 
 import { computed } from 'vue'

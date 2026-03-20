@@ -3,11 +3,14 @@
     <v-toolbar color="transparent">
       <v-toolbar-title text="Lista de Usuários"></v-toolbar-title>
 
+      <!-- TODO: Implantar recursos -->
+      <!--
       <template v-slot:append>
         <v-btn icon="mdi-sort"></v-btn>
         <v-btn icon="mdi-filter-settings-outline"></v-btn>
         <v-btn icon="mdi-magnify"></v-btn>
       </template>
+      -->
     </v-toolbar>
 
     <v-divider />
@@ -22,7 +25,17 @@
           v-show="!deleted.includes(item.id)"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
-          <v-list-item-subtitle>{{ item.district?.name }}</v-list-item-subtitle>
+          <v-list-item-subtitle v-if="user.role.code == 'instructor'" style="display: initial">
+            <v-chip
+              v-for="itemclass in item.classes"
+              :key="itemclass.id"
+              :color="itemclass.color"
+              size="small"
+            >
+              {{ itemclass.name }}
+            </v-chip>
+          </v-list-item-subtitle>
+          <v-list-item-subtitle v-else>{{ item.district?.name }}</v-list-item-subtitle>
 
           <template v-slot:append>
             <v-list-item-action>
@@ -61,8 +74,9 @@
 </template>
 
 <script setup>
-import { ref, toRef, onMounted } from 'vue'
+import { ref, toRef, onMounted, computed } from 'vue'
 
+import { userStore } from '@/stores/userStore'
 import UsersForm from '@/components/data/UsersForm.vue'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
@@ -74,6 +88,10 @@ const deleted = toRef([])
 const updating = toRef({})
 const data = toRef({})
 const sheet = ref(false)
+
+const user = computed(() => {
+  return userStore()
+})
 
 async function loadData() {
   loading.value = true

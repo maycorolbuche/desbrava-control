@@ -1,83 +1,139 @@
 <template>
   <v-card flat>
-    <v-toolbar color="transparent">
-      <v-toolbar-title text="AClubes"></v-toolbar-title>
-
-      <template v-slot:append>
-        <v-btn icon="mdi-sort"></v-btn>
-        <v-btn icon="mdi-filter-settings-outline"></v-btn>
-        <v-btn icon="mdi-magnify"></v-btn>
-      </template>
+    <v-toolbar color="transparent" class="pa-4 pb-1">
+      <SelectClass v-model="class_id" label="Classe" auto-select />
     </v-toolbar>
 
     <v-divider />
 
-    <v-list>
-      <v-skeleton-loader :loading="loading" type="list-item-two-line">
-        <v-list-item
-          v-for="item in data"
-          :key="item.id"
-          :base-color="deleting.includes(item.id) ? 'error' : ''"
-          :class="{ blur: deleting.includes(item.id) }"
-          v-show="!deleted.includes(item.id)"
-        >
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
-          <v-list-item-subtitle>{{ item.district?.name }}</v-list-item-subtitle>
+    <div class="ma-3">Escolha o requisito para ser trabalhado:</div>
 
-          <template v-slot:append>
-            <v-list-item-action>
-              <v-menu>
-                <template v-slot:activator="{ props }">
-                  <v-btn v-bind="props" variant="flat" icon="mdi-dots-vertical"></v-btn>
-                </template>
-                <v-list>
-                  <v-list-item
-                    title="Alterar"
-                    prepend-icon="mdi-pencil-outline"
-                    @click="updateData(item)"
-                  />
-
-                  <v-divider />
-                  <v-list-item
-                    base-color="error"
-                    title="Remover"
-                    prepend-icon="mdi-trash-can-outline"
-                    @click="deleteData(item.id)"
-                  />
-                </v-list>
-              </v-menu>
-            </v-list-item-action>
+    <v-skeleton-loader v-if="loading" type="image" />
+    <v-expansion-panels v-else v-model="panels" variant="accordion" static multiple>
+      <v-expansion-panel
+        v-for="category in data?.categories"
+        :key="category.id"
+        :color="data.color"
+        v-show="!selected_category || selected_category == category.id"
+      >
+        <v-expansion-panel-title>
+          <template v-slot:actions v-if="selected_category">
+            <v-icon icon="mdi-chevron-left"> </v-icon>
           </template>
-        </v-list-item>
-      </v-skeleton-loader>
-    </v-list>
-  </v-card>
+          {{ category.name }}
+        </v-expansion-panel-title>
 
-  <v-bottom-sheet v-model="sheet">
-    <v-card title="Alteração">
-      <ClubsForm :data="updating" @save="saved" />
-    </v-card>
-  </v-bottom-sheet>
+        <v-expansion-panel-text>
+          <v-list class="pa-0">
+            <template v-for="item in category.items" :key="item.id">
+              <v-list-item
+                class="pa-0 py-1"
+                @click="selectItem(category.id, item.id)"
+                v-if="!selected_item"
+              >
+                <v-list-item-title style="text-wrap: auto">
+                  <ol class="ma-0 px-5 pe-0" :start="item.number">
+                    <li>
+                      <span v-html="itemText(item.description)"></span>
+                    </li>
+                  </ol>
+                </v-list-item-title>
+                <div v-if="selected_item">ASASASSASAS</div>
+              </v-list-item>
+
+              <v-list-item class="pa-0 py-1" v-else-if="selected_item == item.id">
+                <v-list-item-title style="text-wrap: auto">
+                  <ol class="ma-0 px-5 pe-0" :start="item.number">
+                    <li>
+                      <span v-html="itemText(item.description)"></span>
+                    </li>
+                  </ol>
+                </v-list-item-title>
+                <div v-if="selected_item">
+                  <ClassesControlItem @save="loadData(true)" />
+                </div>
+              </v-list-item>
+            </template>
+          </v-list>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-card>
 </template>
 
 <script setup>
-import { ref, toRef, onMounted } from 'vue'
+import { ref, toRef, onMounted, watch } from 'vue'
 
-import ClubsForm from '@/components/data/ClubsForm.vue'
+import SelectClass from '@/components/inputs/SelectClass.vue'
+import ClassesControlItem from '@/components/data/ClassesControlItem.vue'
+
+import Text from '@/helpers/Text'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
-import Dialog from '@/helpers/Dialog'
 
+const panels = ref([])
+const class_id = ref(null)
 const loading = ref(false)
-const deleting = toRef([])
-const deleted = toRef([])
-const updating = toRef({})
 const data = toRef({})
-const sheet = ref(false)
 
-async function loadData() {
-  loading.value = true
-  const res = await Api.get('clubs', {})
+const selected_category = ref(null)
+const selected_item = ref(null)
+const last_panels = ref([])
+
+watch(
+  () => class_id.value,
+  () => {
+    deselectItem([])
+    loadData()
+  },
+)
+watch(
+  () => data.value?.categories,
+  (val) => {
+    if (val && !selected_category.value) {
+      deselectItem()
+    }
+  },
+  { immediate: true },
+)
+watch(
+  () => panels.value,
+  (val) => {
+    if (selected_category.value) {
+      deselectItem(last_panels.value)
+    }
+  },
+  { immediate: true },
+)
+
+function itemText(text) {
+  return Text.beauty(text)
+}
+
+function selectItem(category_id, item_id) {
+  selected_category.value = category_id
+  selected_item.value = item_id
+  last_panels.value = panels.value
+}
+function deselectItem(select_panels) {
+  selected_category.value = null
+  selected_item.value = null
+  if (select_panels) {
+    panels.value = select_panels
+  } else {
+    panels.value = data.value?.categories.map((_, index) => index)
+  }
+}
+
+async function loadData(persistent = false) {
+  if (!class_id.value) {
+    return
+  }
+
+  if (!persistent) {
+    loading.value = true
+  }
+  const res = await Api.get('classes/' + class_id.value, {})
   if (!res.success) {
     Alert.error(res.error)
   } else {
@@ -87,42 +143,16 @@ async function loadData() {
     data.value = res.data
   }
   loading.value = false
-}
-
-async function deleteData(id) {
-  Dialog.confirm('Deseja remover este registro?', async (btn) => {
-    if (btn === 'yes') {
-      deleting.value.push(id)
-      const res = await Api.delete('clubs/' + id, {})
-      if (!res.success) {
-        Alert.error(res.error)
-      } else {
-        if (res.message) {
-          Alert.success(res.message)
-        }
-        deleted.value.push(id)
-      }
-      deleting.value = deleting.value.filter((i) => i !== id)
-    }
-  })
-}
-
-async function updateData(item) {
-  updating.value = item
-  sheet.value = true
-}
-
-function saved(payload) {
-  updating.value = {}
-  const index = data.value.findIndex((i) => i.id === payload.id)
-  if (index !== -1) {
-    data.value[index] = payload
-  }
-  console.log('payload', payload)
-  sheet.value = false
+  console.log('LOAD DATA')
 }
 
 onMounted(() => {
   loadData()
 })
 </script>
+
+<style scoped>
+ol li::marker {
+  font-weight: bold;
+}
+</style>

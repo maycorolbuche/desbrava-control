@@ -149,7 +149,6 @@ async function request(method, url, data = null, params = null) {
         config.data = data
       }
     }
-    console.log('CONF', hasFile(data), config)
 
     const response = await Api(config)
 

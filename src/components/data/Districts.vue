@@ -3,11 +3,14 @@
     <v-toolbar color="transparent">
       <v-toolbar-title text="Lista de Distritos"></v-toolbar-title>
 
+      <!-- TODO: Implantar recursos -->
+      <!--
       <template v-slot:append>
         <v-btn icon="mdi-sort"></v-btn>
         <v-btn icon="mdi-filter-settings-outline"></v-btn>
         <v-btn icon="mdi-magnify"></v-btn>
       </template>
+      -->
     </v-toolbar>
 
     <v-divider />
