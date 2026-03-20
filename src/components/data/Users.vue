@@ -125,7 +125,7 @@ async function deleteData(id) {
   })
 }
 
-async function updateData(item) {
+function updateData(item) {
   updating.value = item
   sheet.value = true
 }

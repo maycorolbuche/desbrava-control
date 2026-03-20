@@ -38,7 +38,6 @@
                     </li>
                   </ol>
                 </v-list-item-title>
-                <div v-if="selected_item">ASASASSASAS</div>
               </v-list-item>
 
               <v-list-item class="pa-0 py-1" v-else-if="selected_item == item.id">
@@ -50,7 +49,7 @@
                   </ol>
                 </v-list-item-title>
                 <div v-if="selected_item">
-                  <ClassesControlItem @save="loadData(true)" />
+                  <ClassesControlItem :item-id="item.id" @save="loadData(true)" />
                 </div>
               </v-list-item>
             </template>

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-//TODO: remover depois
+//TODO: Remover depois - Logout Temporário
 import Api from '@/services/Api'
 </script>
 
