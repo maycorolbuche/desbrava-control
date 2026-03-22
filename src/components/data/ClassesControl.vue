@@ -6,7 +6,7 @@
 
     <v-divider />
 
-    <div class="ma-3">Escolha o requisito para ser trabalhado:</div>
+    <v-sheet class="ma-3">Escolha o requisito para ser trabalhado:</v-sheet>
 
     <v-skeleton-loader v-if="loading" type="image" />
     <v-expansion-panels v-else v-model="panels" variant="accordion" static multiple>
