@@ -14,44 +14,40 @@
         v-for="category in data?.categories"
         :key="category.id"
         :color="data.color"
-        v-show="!selected_category || selected_category == category.id"
       >
         <v-expansion-panel-title>
-          <template v-slot:actions v-if="selected_category">
-            <v-icon icon="mdi-chevron-left"> </v-icon>
-          </template>
           {{ category.name }}
         </v-expansion-panel-title>
 
         <v-expansion-panel-text>
           <v-list class="pa-0 ma-0">
-            <template v-for="item in category.items" :key="item.id">
-              <v-list-item
-                v-if="!selected_item"
-                class="pa-0 ma-0 py-1 px-4"
-                @click="selectItem(category.id, item.id)"
-              >
-                <v-list-item-title style="text-wrap: auto">
-                  <ol class="ma-0 px-5 pe-0" :start="item.number">
-                    <li>
-                      <span v-html="itemText(item.description)"></span>
-                    </li>
-                  </ol>
-                </v-list-item-title>
+            <v-list-item
+              v-for="item in category.items"
+              :key="item.id"
+              class="pa-0 ma-0 py-1 px-4"
+              @click="selectItem(category, item)"
+            >
+              <v-list-item-title style="text-wrap: auto">
+                <ol class="ma-0 px-5 pe-0" :start="item.number">
+                  <li>
+                    <span v-html="itemText(item.description)"></span>
+                  </li>
+                </ol>
+              </v-list-item-title>
 
-                <template v-slot:append>
-                  <v-progress-circular
-                    :model-value="resume(item.id).percent"
-                    :color="resume(item.id).color"
-                    class="ms-3"
-                  >
-                    <template v-slot:default="{ value }">
-                      <small>{{ Math.round(value) }} </small>
-                    </template>
-                  </v-progress-circular>
-                </template>
-              </v-list-item>
-
+              <template v-slot:append>
+                <v-progress-circular
+                  :model-value="resume(item.id).percent"
+                  :color="resume(item.id).color"
+                  class="ms-3"
+                >
+                  <template v-slot:default="{ value }">
+                    <small>{{ Math.round(value) }} </small>
+                  </template>
+                </v-progress-circular>
+              </template>
+            </v-list-item>
+            <!--
               <v-list-item v-else-if="selected_item == item.id" class="pa-0 ma-0 py-2 px-4">
                 <v-list-item-title style="text-wrap: auto">
                   <ol class="ma-0 px-5 pe-0" :start="item.number">
@@ -74,12 +70,46 @@
                   <ClassesControlItem :item-id="item.id" @save="loadData(true)" />
                 </div>
               </v-list-item>
-            </template>
+              -->
           </v-list>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
+
+  <v-dialog v-model="show_item" max-width="400" persistent scrollable>
+    <v-card>
+      <v-toolbar :color="data.color">
+        <v-toolbar-title>
+          {{ selected_category?.name }}
+        </v-toolbar-title>
+
+        <v-btn icon="mdi-close" @click="deselectItem()"></v-btn>
+      </v-toolbar>
+
+      <v-card-text>
+        <v-sheet class="d-flex w-100">
+          <div class="font-weight-bold pe-2">{{ selected_item?.number }}.</div>
+          <div>
+            <span v-html="itemText(selected_item?.description)"></span>
+          </div>
+        </v-sheet>
+
+        <ClassesControlItem :item-id="selected_item?.id" @save="loadData(true)" />
+      </v-card-text>
+
+      <template v-slot:actions>
+        <v-sheet class="d-flex align-center mx-auto w-100">
+          <v-progress-linear
+            :model-value="resume(selected_item?.id).percent"
+            :color="resume(selected_item?.id).color"
+            height="15"
+          />
+          <small class="ms-2">{{ Math.round(resume(selected_item?.id).percent) }}%</small>
+        </v-sheet>
+      </template>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
@@ -99,51 +129,30 @@ const data = toRef({})
 
 const selected_category = ref(null)
 const selected_item = ref(null)
-const last_panels = ref([])
+const show_item = ref(false)
 
 watch(
   () => class_id.value,
   () => {
-    deselectItem([])
     loadData()
   },
-)
-watch(
-  () => data.value?.categories,
-  (val) => {
-    if (val && !selected_category.value) {
-      deselectItem()
-    }
-  },
-  { immediate: true },
-)
-watch(
-  () => panels.value,
-  (val) => {
-    if (selected_category.value) {
-      deselectItem(last_panels.value)
-    }
-  },
-  { immediate: true },
 )
 
 function itemText(text) {
   return Text.beauty(text)
 }
 
-function selectItem(category_id, item_id) {
-  selected_category.value = category_id
-  selected_item.value = item_id
-  last_panels.value = panels.value
+function selectItem(category, item) {
+  selected_category.value = category
+  selected_item.value = item
+  show_item.value = true
 }
-function deselectItem(select_panels) {
-  selected_category.value = null
-  selected_item.value = null
-  if (select_panels) {
-    panels.value = select_panels
-  } else {
-    panels.value = data.value?.categories.map((_, index) => index)
-  }
+function deselectItem() {
+  show_item.value = false
+  setTimeout(function () {
+    selected_category.value = null
+    selected_item.value = null
+  }, 500)
 }
 
 async function loadData(persistent = false) {
@@ -162,6 +171,9 @@ async function loadData(persistent = false) {
       Alert.success(res.message)
     }
     data.value = res.data
+    if (!persistent) {
+      panels.value = data.value?.categories?.map((_, index) => index)
+    }
   }
   loading.value = false
 }
