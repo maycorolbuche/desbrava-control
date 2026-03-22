@@ -24,12 +24,12 @@
         </v-expansion-panel-title>
 
         <v-expansion-panel-text>
-          <v-list class="pa-0">
+          <v-list class="pa-0 ma-0">
             <template v-for="item in category.items" :key="item.id">
               <v-list-item
-                class="pa-0 py-1"
-                @click="selectItem(category.id, item.id)"
                 v-if="!selected_item"
+                class="pa-0 ma-0 py-1 px-4"
+                @click="selectItem(category.id, item.id)"
               >
                 <v-list-item-title style="text-wrap: auto">
                   <ol class="ma-0 px-5 pe-0" :start="item.number">
@@ -38,15 +38,37 @@
                     </li>
                   </ol>
                 </v-list-item-title>
+
+                <template v-slot:append>
+                  <v-progress-circular
+                    :model-value="resume(item.id).percent"
+                    :color="resume(item.id).color"
+                    class="ms-3"
+                  >
+                    <template v-slot:default="{ value }">
+                      <small>{{ Math.round(value) }} </small>
+                    </template>
+                  </v-progress-circular>
+                </template>
               </v-list-item>
 
-              <v-list-item class="pa-0 py-1" v-else-if="selected_item == item.id">
+              <v-list-item v-else-if="selected_item == item.id" class="pa-0 ma-0 py-2 px-4">
                 <v-list-item-title style="text-wrap: auto">
                   <ol class="ma-0 px-5 pe-0" :start="item.number">
                     <li>
                       <span v-html="itemText(item.description)"></span>
                     </li>
                   </ol>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-sheet class="d-flex align-center mx-auto">
+                    <v-progress-linear
+                      :model-value="resume(item.id).percent"
+                      :color="resume(item.id).color"
+                      height="15"
+                    />
+                    <small class="ms-2">{{ Math.round(resume(item.id).percent) }}%</small>
+                  </v-sheet>
                 </v-list-item-title>
                 <div v-if="selected_item">
                   <ClassesControlItem :item-id="item.id" @save="loadData(true)" />
@@ -142,7 +164,32 @@ async function loadData(persistent = false) {
     data.value = res.data
   }
   loading.value = false
-  console.log('LOAD DATA')
+}
+
+function resume(id) {
+  const item = Object.values(data.value?.resume?.items).filter((class_item) => {
+    return class_item.class_item_id == id
+  })
+
+  const total = data.value?.resume?.users_count ?? 0
+  const completed =
+    item.filter((st) => {
+      return st.status == 'completed'
+    })[0]?.qtd ?? 0
+  const started =
+    item.filter((st) => {
+      return st.status == 'started'
+    })[0]?.qtd ?? 0
+  const percent = ((completed + started / 2) / total) * 100
+
+  return {
+    total,
+    completed,
+    started,
+    pending: total - completed - started,
+    percent: percent,
+    color: percent >= 100 ? 'success' : percent > 0 ? 'warning' : 'error',
+  }
 }
 
 onMounted(() => {
@@ -153,5 +200,11 @@ onMounted(() => {
 <style scoped>
 ol li::marker {
   font-weight: bold;
+}
+</style>
+<style>
+.v-expansion-panel-text__wrapper {
+  margin: 0;
+  padding: 0;
 }
 </style>
