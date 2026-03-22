@@ -47,30 +47,6 @@
                 </v-progress-circular>
               </template>
             </v-list-item>
-            <!--
-              <v-list-item v-else-if="selected_item == item.id" class="pa-0 ma-0 py-2 px-4">
-                <v-list-item-title style="text-wrap: auto">
-                  <ol class="ma-0 px-5 pe-0" :start="item.number">
-                    <li>
-                      <span v-html="itemText(item.description)"></span>
-                    </li>
-                  </ol>
-                </v-list-item-title>
-                <v-list-item-title>
-                  <v-sheet class="d-flex align-center mx-auto">
-                    <v-progress-linear
-                      :model-value="resume(item.id).percent"
-                      :color="resume(item.id).color"
-                      height="15"
-                    />
-                    <small class="ms-2">{{ Math.round(resume(item.id).percent) }}%</small>
-                  </v-sheet>
-                </v-list-item-title>
-                <div v-if="selected_item">
-                  <ClassesControlItem :item-id="item.id" @save="loadData(true)" />
-                </div>
-              </v-list-item>
-              -->
           </v-list>
         </v-expansion-panel-text>
       </v-expansion-panel>
