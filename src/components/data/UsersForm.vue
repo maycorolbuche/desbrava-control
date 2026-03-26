@@ -20,6 +20,21 @@
         label="Classes"
         :loading="loading"
       />
+      <v-divider />
+      <v-expansion-panels>
+        <v-expansion-panel title="Dados de Acesso" color="primary">
+          <v-expansion-panel-text>
+            <Slug v-model="form.username" label="Nome de Usuário" :loading="loading" />
+            <Input v-model="form.email" label="E-mail" :loading="loading" />
+            <Password
+              v-model="form.password"
+              label="Senha"
+              :loading="loading"
+              hint="Deixe em branco para não alterar!"
+            />
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -49,6 +64,8 @@ import { useRouter } from 'vue-router'
 import { userStore } from '@/stores/userStore'
 
 import Input from '@/components/inputs/Input.vue'
+import Slug from '@/components/inputs/Slug.vue'
+import Password from '@/components/inputs/Password.vue'
 import SelectDistrict from '@/components/inputs/SelectDistrict.vue'
 import SelectClub from '@/components/inputs/SelectClub.vue'
 import MultipleClass from '@/components/inputs/MultipleClass.vue'

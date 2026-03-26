@@ -1,20 +1,20 @@
 <template>
-  <v-text-field
+  <Input
     v-model="model"
-    class="my-3"
-    variant="outlined"
     :label="label"
-    color="info"
-    hide-details="auto"
     :loading="loading"
-    :disabled="loading || disabled"
+    @input="sanitizeUsername($event.target.value)"
+    prepend-inner-icon="mdi-lock"
+    :type="showPassword ? 'text' : 'password'"
+    :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+    @click:append-inner="showPassword = !showPassword"
     :hint="hint"
-    persistent-hint
   />
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import Input from '@/components/inputs/Input.vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
@@ -25,9 +25,14 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+const showPassword = ref(false)
 
 const model = computed({
   get: () => props.modelValue,
   set: (v) => emit('update:modelValue', v),
 })
+
+function sanitizeUsername(value) {
+  model.value = value.toLowerCase().replace(/[^a-z0-9._]/g, '')
+}
 </script>

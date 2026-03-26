@@ -1,27 +1,21 @@
 <template>
-  <v-text-field
+  <Input
     v-model="model"
-    class="my-3"
-    variant="outlined"
     :label="label"
-    color="info"
-    hide-details="auto"
     :loading="loading"
-    :disabled="loading || disabled"
-    :hint="hint"
-    persistent-hint
+    @input="sanitizeUsername($event.target.value)"
   />
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import Input from '@/components/inputs/Input.vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
   label: { type: String, default: '' },
   loading: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
-  hint: { type: String },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -30,4 +24,8 @@ const model = computed({
   get: () => props.modelValue,
   set: (v) => emit('update:modelValue', v),
 })
+
+function sanitizeUsername(value) {
+  model.value = value.toLowerCase().replace(/[^a-z0-9._]/g, '')
+}
 </script>
