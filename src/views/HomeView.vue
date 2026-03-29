@@ -1,5 +1,16 @@
 <template>
   <v-container class="pa-0 ma-0 mx-auto">
+    <v-alert
+      v-if="user.is_temporary_password"
+      class="mx-5 mb-5"
+      border="start"
+      title="Altere sua senha"
+      type="warning"
+    >
+      Você está acessando o sistema com uma senha provisória!
+      <router-link :to="{ name: 'change-password' }">Clique aqui</router-link>
+      e altere sua senha.
+    </v-alert>
     <div class="pa-2 d-flex justify-center flex-wrap" style="gap: 20px">
       <AppButton
         v-if="permissions.includes('districts.manage')"
@@ -71,6 +82,10 @@ import AppButton from '@/components/AppButton.vue'
 import ClassesIcon from '@/components/icons/ClassesIcon.vue'
 import HonorsIcon from '@/components/icons/HonorsIcon.vue'
 import { userStore } from '@/stores/userStore'
+
+const user = computed(() => {
+  return userStore()?.user
+})
 
 const permissions = computed(() => {
   return userStore().role?.permissions?.map((item) => {
