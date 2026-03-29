@@ -25,7 +25,7 @@
           v-show="!deleted.includes(item.id)"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
-          <v-list-item-subtitle v-if="user.role.code == 'instructor'" style="display: initial">
+          <v-list-item-subtitle v-if="user?.role?.code == 'instructor'" style="display: initial">
             <v-chip
               v-for="itemclass in item.classes"
               :key="itemclass.id"

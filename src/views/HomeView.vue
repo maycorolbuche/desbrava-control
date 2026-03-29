@@ -25,6 +25,7 @@
         label="Controle de Classes"
         :to="{ name: 'classes-control' }"
       />
+      <!--
       <AppButton :icon="ClassesIcon" label="Classes" @click="click()" />
       <AppButton :icon="HonorsIcon" label="Especialidades" @click="click()" />
       <AppButton icon="mdi-clock" label="Classes" />
@@ -58,6 +59,7 @@
       <AppButton icon="mdi-calendar" label="Agenda" />
       <AppButton icon="mdi-calendar" label="Agenda" />
       <AppButton icon="mdi-calendar" label="Agenda" />
+      -->
     </div>
   </v-container>
 </template>
@@ -71,12 +73,8 @@ import HonorsIcon from '@/components/icons/HonorsIcon.vue'
 import { userStore } from '@/stores/userStore'
 
 const permissions = computed(() => {
-  return userStore().role.permissions.map((item) => {
+  return userStore().role?.permissions?.map((item) => {
     return item.code
   })
 })
-
-function click() {
-  console.log('CLICK')
-}
 </script>

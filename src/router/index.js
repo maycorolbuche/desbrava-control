@@ -21,6 +21,42 @@ const routes = [
       layout: 'login',
     },
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/auth/ProfileView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/profile/me',
+    name: 'profile-data',
+    component: () => import('@/views/auth/ProfileDataView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/profile/change-password',
+    name: 'change-password',
+    component: () => import('@/views/auth/ChangePasswordView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: () => import('@/views/auth/TermsView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
 
   {
     path: '/distritos',

@@ -2,19 +2,44 @@
   <v-bottom-navigation class="__bottom-menu__">
     <div class="left-menu" />
     <div class="center-menu">
-      <v-btn class="button-menu" icon="mdi-history" />
+      <v-btn class="button-menu" icon="mdi-logout" @click="logout()" />
       <div class="divider-menu" vertical />
-      <v-btn class="button-menu" icon="mdi-heart" />
+      <v-btn class="button-menu" icon="mdi-home-outline" @click="home()" />
       <div class="divider-menu" vertical />
-      <v-btn class="button-menu" icon="mdi-map-marker" @click="Api.logout()" />
+      <v-btn class="button-menu" icon="mdi-account" @click="profile()" />
     </div>
     <div class="right-menu" />
   </v-bottom-navigation>
 </template>
 
 <script setup>
-//TODO: Remover depois - Logout Temporário
 import Api from '@/services/Api'
+import Dialog from '@/helpers/Dialog'
+import { useRouter } from 'vue-router'
+import { useLoading } from '@/composables/loading'
+
+const { start, stop } = useLoading()
+const router = useRouter()
+
+/* ------------------------ METHODS ------------------------ */
+
+async function home() {
+  router.push({ name: 'home' })
+}
+
+async function profile() {
+  router.push({ name: 'profile' })
+}
+
+async function logout() {
+  Dialog.confirm('Deseja encerrar sua sessão?', async (btn) => {
+    if (btn === 'yes') {
+      start()
+      await Api.logout()
+      router.push({ name: 'login' })
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>

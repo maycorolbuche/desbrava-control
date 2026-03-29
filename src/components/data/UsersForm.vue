@@ -3,19 +3,19 @@
     <v-card-text>
       <Input v-model="form.name" label="Nome" :loading="loading" />
       <SelectDistrict
-        v-if="user.role.code != 'instructor'"
+        v-if="user?.role?.code != 'instructor'"
         v-model="form.district_id"
         label="Distrito"
         :loading="loading"
       />
       <SelectClub
-        v-if="user.role.code != 'instructor'"
+        v-if="user?.role?.code != 'instructor'"
         v-model="form.club_id"
         label="Clube"
         :loading="loading"
       />
       <MultipleClass
-        v-if="user.role.code == 'instructor'"
+        v-if="user?.role?.code == 'instructor'"
         v-model="form.class_id"
         label="Classes"
         :loading="loading"

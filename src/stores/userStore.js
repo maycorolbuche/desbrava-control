@@ -21,10 +21,10 @@ export const userStore = defineStore('user', {
     },
 
     clear() {
-      Session.remove('user')
       this.user = null
       this.role = null
       this.permissions = null
+      Session.remove('user')
     },
   },
 })
