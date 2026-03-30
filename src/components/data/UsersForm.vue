@@ -23,7 +23,7 @@
       <v-divider />
       <v-expansion-panels>
         <v-expansion-panel title="Dados de Acesso" color="primary">
-          <v-expansion-panel-text>
+          <v-expansion-panel-text class="px-2">
             <Slug v-model="form.username" label="Nome de Usuário" :loading="loading" />
             <Input v-model="form.email" label="E-mail" :loading="loading" />
             <Password

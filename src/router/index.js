@@ -49,6 +49,15 @@ const routes = [
     },
   },
   {
+    path: '/my-progress',
+    name: 'my-progress',
+    component: () => import('@/views/auth/MyProgressView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
+  {
     path: '/terms',
     name: 'terms',
     component: () => import('@/views/auth/TermsView.vue'),

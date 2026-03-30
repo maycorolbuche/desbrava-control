@@ -318,7 +318,6 @@ async function save(user_id, payload, persistent = false) {
     if (index !== -1) {
       data.value[index].class_item = res.data
     }
-    console.log('EMIT', { user_id, class_item_id: itemId.value, ...payload })
     emit('save', [])
   }
   updating_ids.value = updating_ids.value.filter((i) => i !== user_id)

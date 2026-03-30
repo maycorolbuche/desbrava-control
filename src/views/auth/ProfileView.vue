@@ -17,17 +17,27 @@
         <template v-slot:prepend>
           <v-icon icon="mdi-card-account-details-outline"></v-icon>
         </template>
-
         <v-list-item-title>Meus Dados</v-list-item-title>
       </v-list-item>
+
       <v-list-item color="primary" :to="{ name: 'change-password' }">
         <template v-slot:prepend>
           <v-icon icon="mdi-key"></v-icon>
         </template>
-
         <v-list-item-title>Alterar Senha</v-list-item-title>
       </v-list-item>
+
       <v-divider />
+
+      <v-list-item color="primary" :to="{ name: 'my-progress' }">
+        <template v-slot:prepend>
+          <v-icon icon="mdi-progress-check"></v-icon>
+        </template>
+        <v-list-item-title>Meu Progresso</v-list-item-title>
+      </v-list-item>
+
+      <v-divider />
+
       <v-list-item color="primary" :to="{ name: 'terms' }">
         <template v-slot:prepend>
           <v-icon icon="mdi-file-document-outline"></v-icon>

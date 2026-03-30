@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0 ma-0 mx-auto">
     <v-alert
-      v-if="user.is_temporary_password"
+      v-if="user?.is_temporary_password"
       class="mx-5 mb-5"
       border="start"
       title="Altere sua senha"
@@ -13,28 +13,34 @@
     </v-alert>
     <div class="pa-2 d-flex justify-center flex-wrap" style="gap: 20px">
       <AppButton
-        v-if="permissions.includes('districts.manage')"
+        v-if="permissions?.includes('districts.manage')"
         icon="mdi-map-marker-radius"
         label="Distritos"
         :to="{ name: 'districts' }"
       />
       <AppButton
-        v-if="permissions.includes('clubs.manage')"
+        v-if="permissions?.includes('clubs.manage')"
         icon="mdi-home-city-outline"
         label="Clubes"
         :to="{ name: 'clubs' }"
       />
       <AppButton
-        v-if="permissions.includes('users.manage')"
+        v-if="permissions?.includes('users.manage')"
         icon="mdi-account-group"
         label="Usuários"
         :to="{ name: 'users' }"
       />
       <AppButton
-        v-if="permissions.includes('classes.control')"
+        v-if="permissions?.includes('classes.control')"
         :icon="ClassesIcon"
         label="Controle de Classes"
         :to="{ name: 'classes-control' }"
+      />
+      <AppButton
+        v-if="!permissions"
+        icon="mdi-progress-check"
+        label="Meu Progresso"
+        :to="{ name: 'my-progress' }"
       />
       <!--
       <AppButton :icon="ClassesIcon" label="Classes" @click="click()" />
