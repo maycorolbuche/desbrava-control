@@ -33,6 +33,7 @@
           "
           class="my-1"
           @click="updateItem(item)"
+          v-show="user.id !== item.id"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
           <v-list-item-subtitle>
@@ -245,6 +246,8 @@ import Dialog from '@/helpers/Dialog'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 
+import { userStore } from '@/stores/userStore'
+
 /* ------------------------ VARS ------------------------ */
 
 const props = defineProps({
@@ -283,6 +286,14 @@ const user_honors_class = computed(() => {
     })
 
   return common
+})
+
+const user_store = computed(() => {
+  return userStore()
+})
+
+const user = computed(() => {
+  return user_store.value?.user
 })
 
 /* ------------------------ METHODS ------------------------ */

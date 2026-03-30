@@ -22,7 +22,7 @@
           :key="item.id"
           :base-color="deleting.includes(item.id) ? 'error' : ''"
           :class="{ blur: deleting.includes(item.id) }"
-          v-show="!deleted.includes(item.id)"
+          v-show="!deleted.includes(item.id) && user?.user?.id !== item.id"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
           <v-list-item-subtitle v-if="user?.role?.code == 'instructor'" style="display: initial">
