@@ -37,7 +37,7 @@
         :to="{ name: 'classes-control' }"
       />
       <AppButton
-        v-if="!permissions"
+        v-if="user?.role?.code == 'user'"
         icon="mdi-progress-check"
         label="Meu Progresso"
         :to="{ name: 'my-progress' }"
@@ -47,34 +47,6 @@
       <AppButton :icon="HonorsIcon" label="Especialidades" @click="click()" />
       <AppButton icon="mdi-clock" label="Classes" />
       <AppButton icon="mdi-menu" label="Mapa" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
-      <AppButton icon="mdi-calendar" label="Agenda" />
       <AppButton icon="mdi-calendar" label="Agenda" />
       -->
     </div>
