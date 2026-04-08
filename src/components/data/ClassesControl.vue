@@ -37,6 +37,7 @@
 
               <template v-slot:append>
                 <v-progress-circular
+                  v-if="resume(item.id).total > 0"
                   :model-value="resume(item.id).percent"
                   :color="resume(item.id).color"
                   class="ms-3"
@@ -71,11 +72,18 @@
           </div>
         </v-sheet>
 
-        <ClassesControlItem :item-id="selected_item?.id" @save="loadData(true)" />
+        <ClassesControlItem
+          v-if="resume(selected_item?.id).total > 0"
+          :item-id="selected_item?.id"
+          @save="loadData(true)"
+        />
       </v-card-text>
 
       <template v-slot:actions>
-        <v-sheet class="d-flex align-center mx-auto w-100">
+        <v-sheet
+          v-if="resume(selected_item?.id).total > 0"
+          class="d-flex align-center mx-auto w-100"
+        >
           <v-progress-linear
             :model-value="resume(selected_item?.id).percent"
             :color="resume(selected_item?.id).color"
@@ -155,6 +163,7 @@ async function loadData(persistent = false) {
 }
 
 function resume(id) {
+  console.log('data', data.value)
   const item = Object.values(data.value?.resume?.items).filter((class_item) => {
     return class_item.class_item_id == id
   })

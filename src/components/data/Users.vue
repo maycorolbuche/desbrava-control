@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-toolbar color="transparent">
-      <v-toolbar-title text="Lista de Usuários"></v-toolbar-title>
+      <v-toolbar-title text="Lista de Membros"></v-toolbar-title>
 
       <!-- TODO: Implantar recursos -->
       <!--
@@ -34,6 +34,12 @@
             >
               {{ itemclass.name }}
             </v-chip>
+          </v-list-item-subtitle>
+          <v-list-item-subtitle
+            v-if="user?.role?.code == 'club.secretary' || user?.role?.code == 'director'"
+            style="display: initial"
+          >
+            {{ item?.role?.name }}
           </v-list-item-subtitle>
           <v-list-item-subtitle v-else>{{ item.district?.name }}</v-list-item-subtitle>
 

@@ -33,7 +33,7 @@
           "
           class="my-1"
           @click="updateItem(item)"
-          v-show="user.id !== item.id"
+          v-show="item?.role?.code == 'user'"
         >
           <v-list-item-title>{{ item.name }}</v-list-item-title>
           <v-list-item-subtitle>

@@ -27,7 +27,7 @@
       <AppButton
         v-if="permissions?.includes('users.manage')"
         icon="mdi-account-group"
-        label="Usuários"
+        label="Membros"
         :to="{ name: 'users' }"
       />
       <AppButton

@@ -27,9 +27,7 @@
         <v-list-item-title>Alterar Senha</v-list-item-title>
       </v-list-item>
 
-      <v-divider />
-
-      <v-list-item color="primary" :to="{ name: 'my-progress' }">
+      <v-list-item v-if="user?.role?.code == 'user'" color="primary" :to="{ name: 'my-progress' }">
         <template v-slot:prepend>
           <v-icon icon="mdi-progress-check"></v-icon>
         </template>
