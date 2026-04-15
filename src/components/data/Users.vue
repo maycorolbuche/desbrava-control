@@ -40,6 +40,14 @@
             style="display: initial"
           >
             {{ item?.role?.name }}
+            <v-chip
+              v-for="itemclass in item.classes"
+              :key="itemclass.id"
+              :color="itemclass.color"
+              size="x-small"
+            >
+              {{ itemclass.name }}
+            </v-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle v-else>{{ item.district?.name }}</v-list-item-subtitle>
 
@@ -54,6 +62,12 @@
                     title="Alterar"
                     prepend-icon="mdi-pencil-outline"
                     @click="updateData(item)"
+                  />
+                  <v-list-item
+                    v-if="item?.role?.code === 'user'"
+                    title="Ver Progresso"
+                    prepend-icon="mdi-chart-line"
+                    @click="showUserProgress(item)"
                   />
 
                   <v-divider />
@@ -81,6 +95,7 @@
 
 <script setup>
 import { ref, toRef, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { userStore } from '@/stores/userStore'
 import UsersForm from '@/components/data/UsersForm.vue'
@@ -94,6 +109,7 @@ const deleted = toRef([])
 const updating = toRef({})
 const data = toRef({})
 const sheet = ref(false)
+const router = useRouter()
 
 const user = computed(() => {
   return userStore()
@@ -134,6 +150,10 @@ async function deleteData(id) {
 function updateData(item) {
   updating.value = item
   sheet.value = true
+}
+
+function showUserProgress(item) {
+  router.push({ name: 'user.progress', params: { id: item.id } })
 }
 
 function saved(payload) {

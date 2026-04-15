@@ -2,20 +2,35 @@
   <v-card flat>
     <v-card-text>
       <Input v-model="form.name" label="Nome" :loading="loading" />
+      <SelectRole
+        v-if="user?.role?.code !== 'user' && user?.role?.code !== 'instructor'"
+        v-model="form.role_id"
+        @data="handleRoleData"
+        label="Função"
+        :loading="loading"
+      />
       <SelectDistrict
-        v-if="user?.role?.code != 'instructor'"
+        v-if="user?.role?.code == 'regional' || user?.role?.code == 'regional.secretary'"
         v-model="form.district_id"
         label="Distrito"
         :loading="loading"
       />
       <SelectClub
-        v-if="user?.role?.code != 'instructor'"
+        v-if="
+          user?.role?.code == 'regional' ||
+          user?.role?.code == 'regional.secretary' ||
+          user?.role?.code == 'district'
+        "
         v-model="form.club_id"
         label="Clube"
         :loading="loading"
       />
       <MultipleClass
-        v-if="user?.role?.code == 'instructor'"
+        v-if="
+          user?.role?.code == 'instructor' ||
+          selectedRole?.code === 'instructor' ||
+          selectedRole?.code === 'user'
+        "
         v-model="form.class_id"
         label="Classes"
         :loading="loading"
@@ -66,6 +81,7 @@ import { userStore } from '@/stores/userStore'
 import Input from '@/components/inputs/Input.vue'
 import Slug from '@/components/inputs/Slug.vue'
 import Password from '@/components/inputs/Password.vue'
+import SelectRole from '@/components/inputs/SelectRole.vue'
 import SelectDistrict from '@/components/inputs/SelectDistrict.vue'
 import SelectClub from '@/components/inputs/SelectClub.vue'
 import MultipleClass from '@/components/inputs/MultipleClass.vue'
@@ -92,6 +108,8 @@ const emit = defineEmits(['save'])
 const user = computed(() => {
   return userStore()
 })
+
+const selectedRole = ref(null)
 
 /* ------------------------ WATCH ------------------------ */
 
@@ -130,6 +148,10 @@ async function setForm() {
   if (data.value) {
     form.value = Object.assign({}, data.value)
   }
+}
+
+function handleRoleData(role) {
+  selectedRole.value = role
 }
 
 /* ------------------------ MOUNTED ------------------------ */

@@ -123,6 +123,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: '/usuarios/:id/progresso',
+    name: 'user.progress',
+    component: () => import('@/views/users/UserProgressView.vue'),
+    meta: {
+      layout: 'page',
+      requiresAuth: true,
+    },
+  },
 
   {
     path: '/controle-classe',

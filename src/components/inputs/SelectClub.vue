@@ -11,6 +11,7 @@
     item-value="id"
     :loading="loading || loading_data"
     :disabled="loading || disabled || (loading_data && data.length <= 0)"
+    clearable
   />
 </template>
 

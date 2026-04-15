@@ -1,10 +1,10 @@
 <template>
   <Page title="Meu Perfil" :prev-route="{ name: 'home' }">
     <v-list>
-      <v-list-item prepend-avatar="AS" :title="user?.name" :subtitle="user?.email">
+      <v-list-item :title="user?.name" :subtitle="user?.role?.name">
         <template v-slot:prepend>
           <v-avatar color="primary" size="large">
-            <span class="text-headline-small">{{ user.initials }}</span>
+            <span class="text-headline-small">{{ user?.initials }}</span>
           </v-avatar>
         </template>
       </v-list-item>
