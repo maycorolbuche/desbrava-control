@@ -10,16 +10,20 @@
         :loading="loading"
       />
       <SelectDistrict
-        v-if="user?.role?.code == 'regional' || user?.role?.code == 'regional.secretary'"
+        v-if="selectedRole?.code === 'district'"
         v-model="form.district_id"
         label="Distrito"
         :loading="loading"
       />
       <SelectClub
         v-if="
-          user?.role?.code == 'regional' ||
-          user?.role?.code == 'regional.secretary' ||
-          user?.role?.code == 'district'
+          (user?.role?.code == 'regional' ||
+            user?.role?.code == 'regional.secretary' ||
+            user?.role?.code == 'district') &&
+          (selectedRole?.code == 'director' ||
+            selectedRole?.code == 'club.secretary' ||
+            selectedRole?.code == 'instructor' ||
+            selectedRole?.code == 'user')
         "
         v-model="form.club_id"
         label="Clube"

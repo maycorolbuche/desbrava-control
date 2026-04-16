@@ -2,7 +2,12 @@
   <v-card flat>
     <v-card-text>
       <Input v-model="form.name" label="Nome do Clube" :loading="loading" />
-      <SelectDistrict v-model="form.district_id" label="Distrito" :loading="loading" />
+      <SelectDistrict
+        v-if="user?.user?.role?.code !== 'district'"
+        v-model="form.district_id"
+        label="Distrito"
+        :loading="loading"
+      />
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -27,8 +32,9 @@
 </template>
 
 <script setup>
-import { ref, toRef, onMounted, watch } from 'vue'
+import { ref, toRef, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { userStore } from '@/stores/userStore'
 
 import Input from '@/components/inputs/Input.vue'
 import SelectDistrict from '@/components/inputs/SelectDistrict.vue'
@@ -49,6 +55,10 @@ const form = ref({})
 
 const router = useRouter()
 const emit = defineEmits(['save'])
+
+const user = computed(() => {
+  return userStore()
+})
 
 /* ------------------------ WATCH ------------------------ */
 

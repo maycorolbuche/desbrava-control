@@ -49,7 +49,13 @@
               {{ itemclass.name }}
             </v-chip>
           </v-list-item-subtitle>
-          <v-list-item-subtitle v-else>{{ item.district?.name }}</v-list-item-subtitle>
+          <v-list-item-subtitle v-if="user?.role?.code == 'district'" style="display: initial">
+            {{ item?.club?.name }} | {{ item?.role?.name }}
+          </v-list-item-subtitle>
+          <v-list-item-subtitle v-else>
+            {{ item?.club?.district?.name ?? item?.district?.name }} | {{ item?.club?.name }} |
+            {{ item?.role?.name }}
+          </v-list-item-subtitle>
 
           <template v-slot:append>
             <v-list-item-action>

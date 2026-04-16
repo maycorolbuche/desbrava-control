@@ -31,7 +31,10 @@
         :to="{ name: 'users' }"
       />
       <AppButton
-        v-if="permissions?.includes('classes.control')"
+        v-if="
+          permissions?.includes('classes.control') &&
+          ['user', 'instructor', 'club.secretary', 'director'].includes(user?.role?.code)
+        "
         :icon="ClassesIcon"
         label="Controle de Classes"
         :to="{ name: 'classes-control' }"
