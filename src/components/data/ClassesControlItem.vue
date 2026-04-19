@@ -1,21 +1,5 @@
 <template>
   <v-card flat>
-    <!--
-    LISTA DE USUARIOS|{{ itemId }}|
-    <a @click="save"> EMITA SALVAR </a>
-    -->
-
-    <!-- TODO: Implantar recursos -->
-    <!--
-    <v-toolbar color="transparent">
-      <template v-slot:append>
-        <v-btn icon="mdi-sort"></v-btn>
-        <v-btn icon="mdi-filter-settings-outline"></v-btn>
-        <v-btn icon="mdi-magnify"></v-btn>
-      </template>
-    </v-toolbar>
-    -->
-
     <v-divider class="mt-3" />
 
     <v-list>
