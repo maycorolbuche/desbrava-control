@@ -1,0 +1,1 @@
+import{c as a,w as t,r as s,o,h as c,a as r,C as _}from"./index-DcbHUBvx.js";const n={class:"w-100 d-flex justify-center"},d={__name:"WallpaperView",setup(l){return(p,i)=>{const e=s("v-layout");return o(),a(e,{style:{height:"100vh"}},{default:t(()=>[c("div",n,[r(_,{variant:"wallpaper"})])]),_:1})}}};export{d as default};
