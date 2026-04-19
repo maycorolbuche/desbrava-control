@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => {
       vue(),
       VitePWA({
         registerType: 'autoUpdate',
+        devOptions: {
+          enabled: true, // Ativa o PWA também durante o desenvolvimento
+        },
         manifest: {
           name: 'DesbravaControl',
           short_name: 'DbvCtrl',
