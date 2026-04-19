@@ -1,24 +1,21 @@
 <template>
   <v-card flat>
-    <v-toolbar color="transparent">
-      <v-toolbar-title text="Lista de Membros"></v-toolbar-title>
-
-      <!-- TODO: Implantar recursos -->
-      <!--
-      <template v-slot:append>
-        <v-btn icon="mdi-sort"></v-btn>
-        <v-btn icon="mdi-filter-settings-outline"></v-btn>
-        <v-btn icon="mdi-magnify"></v-btn>
-      </template>
-      -->
-    </v-toolbar>
+    <Toolbar
+      title="Lista de Membros"
+      searchable
+      :sortable="['asc', 'desc']"
+      :filterable="filterable"
+      v-model:search="search"
+      v-model:sort="sort"
+      v-model:filter="filter"
+    />
 
     <v-divider />
 
     <v-list>
       <v-skeleton-loader :loading="loading" type="list-item-two-line">
         <v-list-item
-          v-for="item in data"
+          v-for="item in filteredData"
           :key="item.id"
           :base-color="deleting.includes(item.id) ? 'error' : ''"
           :class="{ blur: deleting.includes(item.id) }"
@@ -100,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, toRef, onMounted, computed } from 'vue'
+import { ref, toRef, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { userStore } from '@/stores/userStore'
@@ -108,17 +105,130 @@ import UsersForm from '@/components/data/UsersForm.vue'
 import Alert from '@/helpers/Alert'
 import Api from '@/services/Api'
 import Dialog from '@/helpers/Dialog'
+import Toolbar from '@/components/Toolbar.vue'
+import Session from '@/helpers/Session'
 
 const loading = ref(false)
 const deleting = toRef([])
 const deleted = toRef([])
 const updating = toRef({})
-const data = toRef({})
+const data = toRef([])
 const sheet = ref(false)
 const router = useRouter()
 
+const search = ref(null)
+const sort = ref(null)
+const filter = ref(null)
+
 const user = computed(() => {
   return userStore()
+})
+
+const filteredData = computed(() => {
+  let result = [...data.value] // Cria uma cópia do array original
+
+  // Aplica o filtro de busca (se existir)
+  if (search.value) {
+    result = result.filter((item) => item.name.toLowerCase().includes(search.value.toLowerCase()))
+  }
+
+  // Aplica o filtro por role (se existir)
+  if (filter.value && filter.value.role && filter.value.role.length > 0) {
+    result = result.filter((item) => item.role && filter.value.role.includes(item.role.id))
+  }
+
+  // Aplica o filtro por clube (se existir)
+  if (filter.value && filter.value.club && filter.value.club.length > 0) {
+    result = result.filter((item) => item.club && filter.value.club.includes(item.club.id))
+  }
+
+  // Aplica a ordenação (se existir)
+  if (sort.value) {
+    if (sort.value === 'asc') {
+      result.sort((a, b) => a.name.localeCompare(b.name))
+    } else if (sort.value === 'desc') {
+      result.sort((a, b) => b.name.localeCompare(a.name))
+    }
+  }
+
+  return result
+})
+
+const filterable = computed(() => {
+  if (user.value?.user?.role?.code == 'instructor') {
+    return []
+  }
+
+  const filters = [{ key: 'role', title: 'Cargo', items: rolesData.value }]
+
+  const allowedRoles = ['regional', 'regional.secretary', 'district']
+  if (user.value?.user?.role?.code && allowedRoles.includes(user.value.user.role.code)) {
+    filters.unshift({ key: 'club', title: 'Clube', items: clubsData.value })
+  }
+
+  return filters
+})
+
+watch(
+  () => search.value,
+  () => {
+    Session.set('list-users-search', search.value)
+  },
+)
+watch(
+  () => sort.value,
+  () => {
+    Session.set('list-users-sort', sort.value)
+  },
+)
+watch(
+  () => filter.value,
+  () => {
+    Session.set('list-users-filter', filter.value)
+  },
+)
+
+const rolesData = computed(() => {
+  if (!data.value || !data.value.length) return []
+
+  // Pega todos os roles distintos
+  const rolesMap = new Map()
+
+  data.value.forEach((item) => {
+    if (item.role && item.role.id) {
+      if (!rolesMap.has(item.role.id)) {
+        rolesMap.set(item.role.id, {
+          id: item.role.id,
+          code: item.role.code,
+          name: item.role.name,
+          level: item.role.level,
+        })
+      }
+    }
+  })
+
+  // Converte o Map para array e ordena por nível ou nome
+  return Array.from(rolesMap.values()).sort((a, b) => b.level - a.level)
+})
+const clubsData = computed(() => {
+  if (!data.value || !data.value.length) return []
+
+  // Pega todos os clubs distintos
+  const clubsMap = new Map()
+
+  data.value.forEach((item) => {
+    if (item.club && item.club.id) {
+      if (!clubsMap.has(item.club.id)) {
+        clubsMap.set(item.club.id, {
+          id: item.club.id,
+          name: item.club.name,
+        })
+      }
+    }
+  })
+
+  // Converte o Map para array e ordena por nível ou nome
+  return Array.from(clubsMap.values()).sort((a, b) => b.level - a.level)
 })
 
 async function loadData() {
@@ -174,5 +284,9 @@ function saved(payload) {
 
 onMounted(() => {
   loadData()
+
+  search.value = Session.get('list-users-search', null)
+  sort.value = Session.get('list-users-sort', null)
+  filter.value = Session.get('list-users-filter', null)
 })
 </script>

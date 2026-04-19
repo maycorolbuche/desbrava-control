@@ -233,6 +233,7 @@ export default {
     const res = await request('post', '/auth/logout')
     removeToken()
     removeUser()
+    Session.clear()
     return res
   },
 
